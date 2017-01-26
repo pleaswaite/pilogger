@@ -438,6 +438,16 @@
     <string>Open Log</string>
    </property>
   </action>
+  <action name="actionInitialize_as_Master">
+   <property name="text">
+    <string>Initialize as Master</string>
+   </property>
+  </action>
+  <action name="actionInitialize_as_Slave">
+   <property name="text">
+    <string>Initialize as Slave</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

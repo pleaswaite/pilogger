@@ -28,10 +28,19 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         self.lookup_button.clicked.connect(self.SearchContact)
 
     def LogContact():
-        #read from mode/freq/call/grid and write to db
+        #we need to fail out if one of 4 items is missing
+        #read from mode/freq/call/grid
+        mode = self.mode_le.text()
+        freq = self.freq_le.text()
+        call = self.call_le.text()
+        grid = self.grid_le.text()
+        #write to db
+        #so sqlite3 magic here
         #update last 3
+        
         #clear call and grid
-
+        self.call_le.clear()
+        self.grid_le.clear()
 
         #foo = self.lineedit.text() where lineedit is the name of the linedit object
 

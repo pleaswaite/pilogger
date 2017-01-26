@@ -1,6 +1,18 @@
 -Implement Writes to DB in slog format
 -Implement Lookup
 -Implement all of it
--Implement networked DB (slave/master?)
+-Implement config file (peers, mostly)
+-Implement networked DB 
+	-configured as peers
+	-write to own db
+	-write to dbs of all peers
+	-Update Last 3 of self and all peers
+	-How to handle disconnects and multiple DB writes?
+		-log somewhere last QSO sent to peers
+		-don't write to other DBs, notify peer to write to their own DB
 -Implement networked freq sharing
-
+-Figure out how to make it work on RPi3
+-Figure out how to make it work on RPiZero?
+-Add bands beyond (or below...) 10 initial bands
+-RigCtl?
+	-can we do this with a billion rigs all connected?
