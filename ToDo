@@ -1,0 +1,6 @@
+-Implement Writes to DB in slog format
+-Implement Lookup
+-Implement all of it
+-Implement networked DB (slave/master?)
+-Implement networked freq sharing
+
