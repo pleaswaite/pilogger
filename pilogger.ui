@@ -6,407 +6,187 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>777</width>
-    <height>385</height>
+    <width>797</width>
+    <height>324</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLineEdit" name="mode_le">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>180</y>
-      <width>113</width>
-      <height>30</height>
+      <x>0</x>
+      <y>0</y>
+      <width>761</width>
+      <height>271</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QPushButton" name="log_button">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>180</y>
-      <width>92</width>
-      <height>28</height>
-     </rect>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
-    <property name="text">
-     <string>Log Contact</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="freq_le">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>180</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="call_le">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>180</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="grid_le">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>180</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="lookup_button">
-    <property name="geometry">
-     <rect>
-      <x>550</x>
-      <y>180</y>
-      <width>92</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Lookup</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Mode</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>150</y>
-      <width>81</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Frequency</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>150</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Callsign</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>150</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Grid</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="last3_box">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>240</y>
-      <width>361</width>
-      <height>75</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="sixm_le">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="twom_le">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>50</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="onetwofive_le">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>50</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="twentythree_le">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>110</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="thirteen_le">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>110</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="nine_le">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>110</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="seventy_le">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>50</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="sixcm_le">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>110</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="thirtythree_le">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>50</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="three_le">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>110</y>
-      <width>113</width>
-      <height>30</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>6m</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_6">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>30</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>2m</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_7">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>30</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>1.25m</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>30</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>70cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_9">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>30</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>33cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_10">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>90</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>23cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_11">
-    <property name="geometry">
-     <rect>
-      <x>150</x>
-      <y>90</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>13cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_12">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>90</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>9cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_13">
-    <property name="geometry">
-     <rect>
-      <x>410</x>
-      <y>90</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>6cm</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_14">
-    <property name="geometry">
-     <rect>
-      <x>540</x>
-      <y>90</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>3cm</string>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="lookup_box">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>240</y>
-      <width>361</width>
-      <height>75</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_15">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>220</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Last 3</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_16">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>220</y>
-      <width>65</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Lookup</string>
-    </property>
+    <widget class="QWidget" name="qso_tab">
+     <attribute name="title">
+      <string>QSO </string>
+     </attribute>
+     <widget class="QLineEdit" name="mode_le">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>113</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="freq_le">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>30</y>
+        <width>113</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="call_le">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>30</y>
+        <width>113</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="mygrid_le">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>30</y>
+        <width>113</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="theirgrid_le">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>30</y>
+        <width>113</width>
+        <height>30</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>65</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Mode</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>10</y>
+        <width>65</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Callsign</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>10</y>
+        <width>81</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Frequency</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>10</y>
+        <width>65</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>My Grid</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>10</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Their Grid</string>
+      </property>
+     </widget>
+     <widget class="QTextEdit" name="worked_te">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>621</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="log_button">
+      <property name="geometry">
+       <rect>
+        <x>650</x>
+        <y>30</y>
+        <width>92</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Log</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Freq Loc</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Log</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Mults</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -414,40 +194,12 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>777</width>
+     <width>797</width>
      <height>26</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionNew_Log"/>
-    <addaction name="actionOpen_Log"/>
-   </widget>
-   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionNew_Log">
-   <property name="text">
-    <string>New Log</string>
-   </property>
-  </action>
-  <action name="actionOpen_Log">
-   <property name="text">
-    <string>Open Log</string>
-   </property>
-  </action>
-  <action name="actionInitialize_as_Master">
-   <property name="text">
-    <string>Initialize as Master</string>
-   </property>
-  </action>
-  <action name="actionInitialize_as_Slave">
-   <property name="text">
-    <string>Initialize as Slave</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>
