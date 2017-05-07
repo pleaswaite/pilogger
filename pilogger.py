@@ -16,60 +16,46 @@ import hashlib
 from PyQt4 import QtCore, QtGui, uic
 from time import gmtime, strftime
 
-qtCreatorFile = "/home/swaite/Hacking/pilogger/pilogger2.ui"
+qtCreatorFile = "/home/swaite/Hacking/pilogger/pilogger.ui"
 checkLog = "/home/swaite/Hacking/pilogger/checklog.log"
 myCall = "K1SIG/R"
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
-#requires QSO class
-#requires DB queue class
 #need a method of collecting QSOs from peers and inserting into DB queue
 #requires way to read basic info from config file
 
-class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
+class QSO:
+    time = ""
+    mode = ""
+    myCall = ""
+    myExchange = ""
+    theirExchange = ""
+    frequency = ""
+    band = ""
+    qso_id = ""
+    theirCall = ""
 
-    def __init__(self):
-        QtGui.QMainWindow.__init__(self)
-        Ui_MainWindow.__init__(self)
-        self.setupUi(self)
-        #read anything in LEs and look for dupes/other bands
-        #while we're at it, check for unsent Qs and send to peers
-        self.log_button.clicked.connect(self.LogContact)
-        self.lookup_button.clicked.connect(self.SearchContact)
-
-    def LogContact():
-        #we need to fail out if one of 5 items is missing
-        #read from mode/freq/call/grid
-        mode = self.mode_le.text()
-        freq = self.freq_le.text().toFloat()
-        call = self.call_le.text()
-        mygrid = self.mygrid_le.text()
-        theirgrid = self.theirgrid_le.text()
-        time =  strftime("%Y-%m-%d %H%M")
-        band = self.GetBand(freq)
-        logstring = "%s %s %s %s %s %s %s" % (band,mode,time,myCall,mygrid,
-                    call,theirgrid)
-        qso_id = hashlib.md5(logstring).hexdigest()
-        logstring = qso_id + " " +logstring
-        #write out to checklog
-        writelog = open(checkLog,'w')
-        writelog.write(logstring)
-        
-        #insert it into the db write queue
-                
-        #clear call and grid
-        self.call_le.clear()
-        self.theirgrid_le.clear()
-
-        #foo = self.lineedit.text() where lineedit is the name of the linedit object
+    def __init__(self,mode,myCall,myexchange,call,theirexchange,freq):
+        self.time =  strftime("%Y-%m-%d %H%M")
+        self.band = self.GetBand(freq)
+        self.frequency = freq
+        self.mode = mode
+        self.myExchange = myexchange
+        self.myCall = myCall
+        self.theirExchange = theirexchange
+        self.theirCall = call
+#        self.qso_id = hashlib.md5().hexdigest()
+ 
+    def qsoString():
+        #logstring = "%s %s %s %s %s %s %s" % (band,mode,time,myCall,mygrid,
+               #     call,theirgrid)
+        print "logstring" 
 
     def GetBand(freq):
         #if freq is blablabla band = 
         mhz = int(freq)
     
-        band = "144"
-
         if mhz >= 50 and mhz <=54:
             band = "50"
         elif mhz >= 144 and mhz <= 148:
@@ -94,6 +80,42 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
             band = "INVALID"
 
         return band
+
+class DBQueue:
+    def __init__(self):
+        print "init"
+
+class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
+
+    def __init__(self):
+        QtGui.QMainWindow.__init__(self)
+        Ui_MainWindow.__init__(self)
+        self.setupUi(self)
+        #read anything in LEs and look for dupes/other bands
+        #while we're at it, check for unsent Qs and send to peers
+        self.log_button.clicked.connect(self.LogContact)
+        #self.call_le.textChanged.connect(updateCallBox())
+
+    def LogContact():
+        #we need to fail out if one of 5 items is missing
+        #read from mode/freq/call/grid
+#(self,mode,myCall,myexchange,call,theirexchange,freq)
+#        currentQ = QSO(self.mode_le.text(),myCall,self.mygrid_le.text())
+        freq = self.freq_le.text().toFloat()
+        call = self.call_le.text()
+        mygrid = self.mygrid_le.text()
+        theirgrid = self.theirgrid_le.text()
+        #write out to checklog
+        writelog = open(checkLog,'w')
+        writelog.write(logstring)
+        
+        #insert it into the db write queue
+                
+        #clear call and grid
+        self.call_le.clear()
+        self.theirgrid_le.clear()
+
+        #foo = self.lineedit.text() where lineedit is the name of the linedit object
 
     def SearchContact():
         print "Not implemented"
