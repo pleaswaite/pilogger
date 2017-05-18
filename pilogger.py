@@ -45,11 +45,11 @@ class QSO:
         self.myCall = myCall
         self.theirExchange = theirexchange
         self.theirCall = call
-#        self.qso_id = hashlib.md5().hexdigest()
+        self.qso_id = hashlib.md5().hexdigest()
  
     def qsoString():
-        #logstring = "%s %s %s %s %s %s %s" % (band,mode,time,myCall,mygrid,
-               #     call,theirgrid)
+        logstring = "{0},{1},{2},{3},{4},{5},{6}".format(self.qso_id,self.band,
+            self.mode,self.time,self.myCall,self.mygrid,self.call,self.theirgrid)
         print "logstring" 
 
     def GetBand(freq):
@@ -91,21 +91,26 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         QtGui.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
+        print "Ready to go"
         #read anything in LEs and look for dupes/other bands
         #while we're at it, check for unsent Qs and send to peers
         self.log_button.clicked.connect(self.LogContact)
         #self.call_le.textChanged.connect(updateCallBox())
+        print "end of init"
 
     def LogContact():
         #we need to fail out if one of 5 items is missing
         #read from mode/freq/call/grid
 #(self,mode,myCall,myexchange,call,theirexchange,freq)
 #        currentQ = QSO(self.mode_le.text(),myCall,self.mygrid_le.text())
+        mode = self.mode_le.text()
         freq = self.freq_le.text().toFloat()
         call = self.call_le.text()
         mygrid = self.mygrid_le.text()
         theirgrid = self.theirgrid_le.text()
-        #write out to checklog
+        myCall = "WA1TE"
+        #QSO.__init__(smode,myCall,mygrid,call,theirgrid,freq):
+       #write out to checklog
         writelog = open(checkLog,'w')
         writelog.write(logstring)
         
@@ -126,5 +131,8 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     window = piloggergui()
+    print "before show"
     window.show
+    print "after show"
     sys.exit(app.exec_())
+    print "after exit"
