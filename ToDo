@@ -22,3 +22,4 @@
 	-can we do this with a billion rigs all connected?
 	-Probably not, especially with transverters involved.
   -Maybe define an offset for transverters based on band - how to handle multiple xverters on same rig?
+-Figure out how to log Light contacts
