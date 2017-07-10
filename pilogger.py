@@ -50,7 +50,8 @@ class QSO:
     def qsoString():
         logstring = "{0},{1},{2},{3},{4},{5},{6}".format(self.qso_id,self.band,
             self.mode,self.time,self.myCall,self.mygrid,self.call,self.theirgrid)
-        print "logstring" 
+        print logstring 
+        return logstring
 
     def GetBand(freq):
         #if freq is blablabla band = 
@@ -91,14 +92,12 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         QtGui.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
-        print "Ready to go"
         #read anything in LEs and look for dupes/other bands
         #while we're at it, check for unsent Qs and send to peers
-        self.log_button.clicked.connect(self.LogContact)
+        self.log_button.clicked.connect(self.LogContact())
         #self.call_le.textChanged.connect(updateCallBox())
-        print "end of init"
 
-    def LogContact():
+    def LogContact(self):
         #we need to fail out if one of 5 items is missing
         #read from mode/freq/call/grid
 #(self,mode,myCall,myexchange,call,theirexchange,freq)
@@ -109,10 +108,13 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         mygrid = self.mygrid_le.text()
         theirgrid = self.theirgrid_le.text()
         myCall = "WA1TE"
-        #QSO.__init__(smode,myCall,mygrid,call,theirgrid,freq):
-       #write out to checklog
+    
+        #since we have that data, now create a QSO object
+        contact = QSO.__init__(mode,myCall,mygrid,call,theirgrid,freq)
+   
+        #write out to checklog
         writelog = open(checkLog,'w')
-        writelog.write(logstring)
+        writelog.write(contact.qsoString())
         
         #insert it into the db write queue
                 
@@ -131,8 +133,5 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     window = piloggergui()
-    print "before show"
-    window.show
-    print "after show"
+    window.show()
     sys.exit(app.exec_())
-    print "after exit"
