@@ -47,15 +47,15 @@ class QSO:
         self.theirCall = call
         self.qso_id = hashlib.md5().hexdigest()
  
-    def qsoString():
+    def qsoString(self):
         logstring = "{0},{1},{2},{3},{4},{5},{6}".format(self.qso_id,self.band,
-            self.mode,self.time,self.myCall,self.mygrid,self.call,self.theirgrid)
+            self.mode,self.time,self.myCall,self.myExchange,self.theirCall,self.theirExchange)
         print logstring 
         return logstring
 
-    def GetBand(freq):
+    def GetBand(self,freq):
         #if freq is blablabla band = 
-        mhz = int(freq)
+        mhz = freq
     
         if mhz >= 50 and mhz <=54:
             band = "50"
@@ -94,7 +94,7 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         #read anything in LEs and look for dupes/other bands
         #while we're at it, check for unsent Qs and send to peers
-        self.log_button.clicked.connect(self.LogContact())
+        self.log_button.clicked.connect(lambda: self.LogContact())
         #self.call_le.textChanged.connect(updateCallBox())
 
     def LogContact(self):
@@ -102,6 +102,12 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         #read from mode/freq/call/grid
 #(self,mode,myCall,myexchange,call,theirexchange,freq)
 #        currentQ = QSO(self.mode_le.text(),myCall,self.mygrid_le.text())
+
+
+        if self.mode_le.text().isEmpty() or self.freq_le.text().isEmpty() or self.call_le.text().isEmpty() or self.mygrid_le.text().isEmpty() or self.theirgrid_le.text().isEmpty():
+            print "Missing data from Q"
+            return
+
         mode = self.mode_le.text()
         freq = self.freq_le.text().toFloat()
         call = self.call_le.text()
@@ -110,7 +116,8 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         myCall = "WA1TE"
     
         #since we have that data, now create a QSO object
-        contact = QSO.__init__(mode,myCall,mygrid,call,theirgrid,freq)
+
+        contact = QSO(mode,myCall,mygrid,call,theirgrid,int(freq[0]))
    
         #write out to checklog
         writelog = open(checkLog,'w')
@@ -129,6 +136,7 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         #read from call, find db entries with that call
         #display in lookup box with warning if dupe (otherwise, just where else
         #they have been worked)
+        #show us if it is a new mult, or if it is a new 
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
