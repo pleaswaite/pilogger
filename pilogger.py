@@ -37,7 +37,7 @@ class QSO:
     theirCall = ""
 
     def __init__(self,mode,myCall,myexchange,call,theirexchange,freq):
-        self.time =  strftime("%Y-%m-%d %H%M")
+        self.time =  strftime("%Y-%m-%d %H%M",gmtime())
         self.band = self.GetBand(freq)
         self.frequency = freq
         self.mode = mode
@@ -77,6 +77,18 @@ class QSO:
             band = "5.7G"
         elif mhz >= 10000 and mhz <= 10500:
             band = "10G"
+        elif mhz >= 24000 and mhz <= 24250:
+            band = "24G"
+        elif mhz >= 47000 and mhz <= 47200:
+            band = "47G"
+        elif mhz >= 71500 and mhz <= 81500:
+            band = "75G"
+        elif mhz >= 122250 and mhz <= 123000:
+            band = "123G"
+        elif mhz >= 134000 and mhz <= 141000:
+            band = "134G"
+        elif mhz >= 241000 and mhz <= 250000:
+            band = "241G"
         else:
             band = "INVALID"
 
