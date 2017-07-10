@@ -13,17 +13,39 @@
 import sys
 import sqlite3
 import hashlib
+import ConfigParser
 from PyQt4 import QtCore, QtGui, uic
 from time import gmtime, strftime
 
-qtCreatorFile = "/home/swaite/Hacking/pilogger/pilogger.ui"
-checkLog = "/home/swaite/Hacking/pilogger/checklog.log"
-myCall = "K1SIG/R"
+qtCreatorFile = "pilogger.ui"
+
+#Globals to be read from config file
+checkLog = ""
+database = ""
+myCall = ""
+myOp = ""
+
+
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 #need a method of collecting QSOs from peers and inserting into DB queue
 #requires way to read basic info from config file
+
+
+def ConfigSectionMap(section):
+    dict1 = {}
+    options = Config.options(section)
+    for option in options:
+        try:
+            dict1[option] = Config.get(section, option)
+            if dict1[option] == -1:
+                DebugPrint("skip: %s" % option)
+        except:
+            print("exception on %s!" % option)
+            dict1[option] = None
+    return dict1
+
 
 class QSO:
     time = ""
@@ -43,13 +65,14 @@ class QSO:
         self.mode = mode
         self.myExchange = myexchange
         self.myCall = myCall
+        self.opCall = myOp
         self.theirExchange = theirexchange
         self.theirCall = call
         self.qso_id = hashlib.md5().hexdigest()
  
     def qsoString(self):
-        logstring = "{0},{1},{2},{3},{4},{5},{6}".format(self.qso_id,self.band,
-            self.mode,self.time,self.myCall,self.myExchange,self.theirCall,self.theirExchange)
+        logstring = "{0},{1},{2},{3},{4},{5},{6},{7},{8}\n".format(self.qso_id,self.band,
+            self.mode,self.time,self.myCall,self.myExchange,self.theirCall,self.theirExchange,self.opCall)
         print logstring 
         return logstring
 
@@ -125,14 +148,14 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         call = self.call_le.text()
         mygrid = self.mygrid_le.text()
         theirgrid = self.theirgrid_le.text()
-        myCall = "WA1TE"
+        #myCall = "WA1TE"
     
         #since we have that data, now create a QSO object
 
         contact = QSO(mode,myCall,mygrid,call,theirgrid,int(freq[0]))
    
         #write out to checklog
-        writelog = open(checkLog,'w')
+        writelog = open(checkLog,'a')
         writelog.write(contact.qsoString())
         
         #insert it into the db write queue
@@ -151,6 +174,20 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         #show us if it is a new mult, or if it is a new 
 
 if __name__ == "__main__":
+
+    Config = ConfigParser.ConfigParser()
+    Config.read("mrlog.config")    
+
+    myCall = ConfigSectionMap("Operator")['station_call']
+    myOp = ConfigSectionMap("Operator")['operator_call'] 
+
+    db_directory = ConfigSectionMap("Config")['db_directory']
+    writelog_directory = ConfigSectionMap("Config")['writelog_directory']
+   
+    database = "{0}/mrlog.database".format(db_directory)
+    checkLog = "{0}/checklog.log".format(writelog_directory)
+ 
+
     app = QtGui.QApplication(sys.argv)
     window = piloggergui()
     window.show()
