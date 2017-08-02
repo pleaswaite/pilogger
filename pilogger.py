@@ -1,23 +1,14 @@
 #! /usr/bin/env python
 
-#CREATE TABLE "qsos"("id" INTEGER PRIMARY KEY,"date" VARCHAR NOT NULL,
-#"time" VARCHAR NOT NULL,"freq" REAL NOT NULL,"rx_freq" REAL NULL,
-#"mode" VARCHAR NOT NULL,"dxcc" INTEGER NULL,"grid" VARCHAR NULL,
-#"state" VARCHAR NULL,"name" VARCHAR NULL,"notes" VARCHAR NULL,
-#"xc_in" VARCHAR NULL,"xc_out" VARCHAR NULL,"rst_rcvd" VARCHAR NOT NULL,
-#"rst_sent" VARCHAR NOT NULL,"itu" INTEGER NULL,"waz" INTEGER NULL,
-#"call" VARCHAR NOT NULL,"prop_mode" VARCHAR NULL,"sat_name" VARCHAR NULL,
-#"antenna" VARCHAR NULL,"my_call" VARCHAR NOT NULL,
-#"my_qth" VARCHAR NOT NULL,"power" INTEGER NULL);
-
 import sys
 import sqlite3
 import hashlib
 import ConfigParser
+import os.path
+import Queue
 from PyQt4 import QtCore, QtGui, uic
 from time import gmtime, strftime
 
-qtCreatorFile = "pilogger.ui"
 
 #Globals to be read from config file
 checkLog = ""
@@ -25,12 +16,15 @@ database = ""
 myCall = ""
 myOp = ""
 
+#We need a queue to handle QSOs being inserted from both the local instance
+#and networked instances
+qso_queue = Queue.Queue()
 
-
+#Load the UI file
+qtCreatorFile = "pilogger.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtCreatorFile)
 
 #need a method of collecting QSOs from peers and inserting into DB queue
-#requires way to read basic info from config file
 
 
 def ConfigSectionMap(section):
@@ -46,6 +40,23 @@ def ConfigSectionMap(section):
             dict1[option] = None
     return dict1
 
+def createDB():
+
+    create_table_qsos = """CREATE TABLE IF NOT EXISTS qsos (
+        id TEXT PRIMARY KEY,
+        band TEXT NOT NULL,
+        mode TEXT NOT NULL,
+        time TEXT NOT NULL,
+        mycall TEXT NOT NULL,
+        myexchange TEXT NOT NULL,
+        theircall TEXT NOT NULL,
+        theirexchange TEXT NOT NULL,
+        opcall TEXT NOT NULL
+        );"""
+
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    cur.execute(create_table_qsos)
 
 class QSO:
     time = ""
@@ -70,6 +81,7 @@ class QSO:
         self.theirCall = call
         self.qso_id = hashlib.md5().hexdigest()
  
+
     def qsoString(self):
         logstring = "{0},{1},{2},{3},{4},{5},{6},{7},{8}\n".format(self.qso_id,self.band,
             self.mode,self.time,self.myCall,self.myExchange,self.theirCall,self.theirExchange,self.opCall)
@@ -127,6 +139,7 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         QtGui.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
+        self.showMaximized()
         #read anything in LEs and look for dupes/other bands
         #while we're at it, check for unsent Qs and send to peers
         self.log_button.clicked.connect(lambda: self.LogContact())
@@ -135,9 +148,6 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
     def LogContact(self):
         #we need to fail out if one of 5 items is missing
         #read from mode/freq/call/grid
-#(self,mode,myCall,myexchange,call,theirexchange,freq)
-#        currentQ = QSO(self.mode_le.text(),myCall,self.mygrid_le.text())
-
 
         if self.mode_le.text().isEmpty() or self.freq_le.text().isEmpty() or self.call_le.text().isEmpty() or self.mygrid_le.text().isEmpty() or self.theirgrid_le.text().isEmpty():
             print "Missing data from Q"
@@ -148,7 +158,6 @@ class piloggergui(QtGui.QMainWindow, Ui_MainWindow):
         call = self.call_le.text()
         mygrid = self.mygrid_le.text()
         theirgrid = self.theirgrid_le.text()
-        #myCall = "WA1TE"
     
         #since we have that data, now create a QSO object
 
@@ -187,6 +196,9 @@ if __name__ == "__main__":
     database = "{0}/mrlog.database".format(db_directory)
     checkLog = "{0}/checklog.log".format(writelog_directory)
  
+    if not os.path.isfile(database):
+        createDB()        
+
 
     app = QtGui.QApplication(sys.argv)
     window = piloggergui()
